@@ -69,20 +69,26 @@ openssl x509 -req -in full.csr -signkey key.pem -out full.pem
 
 ## acme
 
-run acme as daemon
+install
 
 ```shell
-docker run --rm -itd \
--v acme:/acme.sh \
---name=acme.sh \
--e Namesilo_key="a39d759ee947f08343ae7a104" \
-neilpang/acme.sh daemon
+curl  https://get.acme.sh | sh
+source ~/.bashrc
 ```
 
 generate certificate
 
 ```shell
-docker exec acme.sh --set-default-ca  --server  letsencrypt
-docker exec acme.sh --issue --dns dns_namesilo -d bonjour.jeromesu.com --dnssleep 300
+acme.sh --set-default-ca  --server  letsencrypt
+Namesilo_Key="a39d759ee947f08343ae7a104" acme.sh --issue --dns dns_namesilo -d bonjour.jeromesu.com --dnssleep 180
+```
+
+deploy certificate
+
+```shell
+acme.sh --installcert -d bonjour.jeromesu.com   \
+        --key-file   ~/J2ray/nginx/config/certs/bonjour_jeromesu_com/key.pem \
+        --fullchain-file ~/J2ray/nginx/config/certs/bonjour_jeromesu_com/full.pem \
+        --ecc
 ```
 
