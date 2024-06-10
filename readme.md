@@ -22,16 +22,32 @@ sudo docker run --rm hello-world
 
 
 
-
-
 ## v2ray
 
 ```shell
 docker build -t jeromesu/v2ray .
 ```
 
+```shell
+sudo docker run --rm -itd -p 10086:10086 --name=v2ray jeromesu/v2ray
 ```
-docker run --rm -d -p 10086:10086 --name=v2ray jeromesu/v2ray
+
+
+
+## nginx
+
+```shell
+docker container run \
+  --rm \
+  --name nginx \
+  -v "$PWD/web":/usr/share/nginx/html \
+  -v "$PWD/config/conf.d":/etc/nginx/conf.d \
+  -v "$PWD/log":/var/log/nginx \
+  --label=sh.acme.autoload.domain=bonjour.jeromesu.com \
+  -p 80:80 \
+  -p 443:443 \
+  -d \
+  nginx
 ```
 
 
@@ -55,19 +71,3 @@ docker exec acme.sh --set-default-ca  --server  letsencrypt
 docker exec acme.sh --issue --dns dns_namesilo -d bonjour.jeromesu.com --dnssleep 300
 ```
 
-
-
-## nginx
-
-```Shell
-docker container run \
-  --rm \
-  --name nginx \
-  --volume "$PWD/html":/usr/share/nginx/html \
-  --volume "$PWD/conf":/etc/nginx \
-  --label=sh.acme.autoload.domain=bonjour.jeromesu.com \
-  -p 80:80 \
-  -p 443:443 \
-  -d \
-  nginx
-```
