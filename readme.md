@@ -31,11 +31,17 @@ sudo docker network create --driver bridge j2ray
 ## v2ray
 
 ```shell
-sudo docker build -t jeromesu/v2ray .
+sudo docker build -t jeromesu/v2ray v2ray/docker/
 ```
 
 ```shell
-sudo docker run --rm --name=v2ray --net j2ray -itd jeromesu/v2ray
+sudo docker run --rm \
+--name=v2ray \
+-v "$PWD"/v2ray/config:/config \
+-v "$PWD"/log/v2ray:/var/log/v2ray \
+--net j2ray \
+-itd \
+jeromesu/v2ray
 ```
 
 
