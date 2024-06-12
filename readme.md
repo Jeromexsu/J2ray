@@ -38,8 +38,11 @@ sudo docker build -t jeromesu/v2ray v2ray/docker/
 sudo docker run --rm \
 --name=v2ray \
 -v "$PWD"/v2ray/config:/config \
--v "$PWD"/log/v2ray:/var/log/v2ray \
+-v "$PWD"/../log/v2ray:/var/log/v2ray \
 --net j2ray \
+-p 10084:10084 \
+-p 10085:10085 \
+-p 10086:10086 \
 -itd \
 jeromesu/v2ray
 ```
@@ -97,4 +100,3 @@ acme.sh --installcert -d bonjour.jeromesu.com   \
         --fullchain-file ~/J2ray/nginx/config/certs/bonjour_jeromesu_com/full.pem \
         --ecc
 ```
-
